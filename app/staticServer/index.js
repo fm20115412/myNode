@@ -5,16 +5,17 @@ const fs=require("fs");
 const path=require("path");
 let getPath=url=>path.resolve(process.cwd(),"public",`.${url}`);
 let staticFunc=(url)=>{
-    if(url=="/"){
-        url="/index.html";
-    }
-    let _path=getPath(url);
-    let body="";
-    try{
-        body=fs.readFileSync(_path);
-    }catch(error){
-        body="Not found";
-    }
-    return body;
+    return new Promise((resolve,reject)=>{
+        if(url=="/"){
+            url="/index.html";
+        }
+        let _path=getPath(url);
+        let body=fs.readFile(_path,(err,data)=>{
+            if(err){
+                reject(`Not Found${err.stack}`)
+            }
+            resolve(data);
+        });
+    })
 }
 module.exports=staticFunc;

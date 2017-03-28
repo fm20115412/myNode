@@ -4,6 +4,7 @@
  */
 
 const staticServer=require("./staticServer");
+const apiServer=require("./api");
 class App{
     constructor(){
     }
@@ -11,9 +12,23 @@ class App{
         // 初始化工作
         return (request,response)=>{
             let {url}=request;
-            let body=staticServer(url);
-            response.writeHead("200","it's ok now",{"X-powered-by":"Node.js"});
-            response.end(body);
+            let body="";
+            let headers={};
+            if(url.match(".action")){
+                body=JSON.stringify(apiServer(url));
+                headers={"Content-Type":"application/json"}
+                let finalHeaders=Object.assign(headers,{"X-powered-by":"Node.js"});
+                response.writeHead("200","it's ok now",finalHeaders);
+                response.end(body);
+            }
+            else{
+                staticServer(url).then((body)=>{
+                    let finalHeaders=Object.assign(headers,{"X-powered-by":"Node.js"});
+                    response.writeHead("200","it's ok now",finalHeaders);
+                    response.end(body);
+                });
+            }
+
         }
     }
 }
