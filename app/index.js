@@ -15,11 +15,13 @@ class App{
             let body="";
             let headers={};
             if(url.match(".action")){
-                body=JSON.stringify(apiServer(url));
-                headers={"Content-Type":"application/json"}
-                let finalHeaders=Object.assign(headers,{"X-powered-by":"Node.js"});
-                response.writeHead("200","it's ok now",finalHeaders);
-                response.end(body);
+                apiServer(url).then(val=>{
+                    body=JSON.stringify(val);
+                    headers={"Content-Type":"application/json"}
+                    let finalHeaders=Object.assign(headers,{"X-powered-by":"Node.js"});
+                    response.writeHead("200","it's ok now",finalHeaders);
+                    response.end(body);
+                });
             }
             else{
                 staticServer(url).then((body)=>{

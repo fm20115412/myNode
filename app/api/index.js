@@ -6,5 +6,5 @@ module.exports=url=>{
         "/fruit.action":["apple","orange","pear"],
         "/color.action":["blue","green","red"]
     }
-    return apiMap[url];
+    return Promise.resolve(apiMap[url]);
 }
