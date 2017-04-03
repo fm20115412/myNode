@@ -16,7 +16,8 @@ $.ajax({
 })
 $.ajax({
     url:"/color.action",
-    method:"get",
+    method:"post",
+    data: JSON.stringify(["name","fm_BabyBear"]),
     success:function(arr){
         let data=arr.map(function (ele) {
             return "<li>"+ele+"</li>"

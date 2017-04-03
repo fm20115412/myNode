@@ -5,31 +5,40 @@
 
 const staticServer=require("./staticServer");
 const apiServer=require("./api");
+const urlParser=require("./url-parser");
 class App{
     constructor(){
     }
     initServer(){
         // 初始化工作
         return (request,response)=>{
-            let {url}=request;
-            let body="";
-            let headers={};
-            if(url.match(".action")){
-                apiServer(url).then(val=>{
-                    body=JSON.stringify(val);
-                    headers={"Content-Type":"application/json"}
-                    let finalHeaders=Object.assign(headers,{"X-powered-by":"Node.js"});
-                    response.writeHead("200","it's ok now",finalHeaders);
+            request.contxt={
+                body:"",
+                query:{},
+                method:"get"
+            };
+            urlParser(request).then(()=>{
+                 return apiServer(request).then(val=>{
+                    if(!val){
+                        return staticServer(request);
+                    }
+                    else{
+                        return val;
+                    }
+                }).then(val=>{
+                    let base={"X-powered-by":"Node.js"};
+                    let body="";
+                    if(val instanceof Buffer){
+                        body=val;
+                    }else{
+                        body=JSON.stringify(val);
+                        let finalHeader=Object.assign(base,{"Content-Type":"application/json"});
+                        response.writeHead(200,"ok",finalHeader);
+                    };
                     response.end(body);
-                });
-            }
-            else{
-                staticServer(url).then((body)=>{
-                    let finalHeaders=Object.assign(headers,{"X-powered-by":"Node.js"});
-                    response.writeHead("200","it's ok now",finalHeaders);
-                    response.end(body);
-                });
-            }
+                })
+            })
+
 
         }
     }
