@@ -2,44 +2,45 @@
  * Created by fm on 2017/3/20.
  * 主要核心逻辑
  */
-
-const staticServer=require("./staticServer");
-const apiServer=require("./api");
-const urlParser=require("./url-parser");
 class App{
     constructor(){
+        this.middlewareArr=[];
+        this.middlewareChain=Promise.resolve();
+    }
+    use(middleware){
+        this.middlewareArr.push(middleware);
+    }
+    composeMiddleWare(context){
+        let {middlewareArr}=this;
+        for(let middleware of middlewareArr){
+            this.middlewareChain=this.middlewareChain.then(()=>
+                middleware(context)
+            );
+        }
+        return this.middlewareChain;
     }
     initServer(){
         // 初始化工作
         return (request,response)=>{
-            request.contxt={
-                body:"",
-                query:{},
-                method:"get"
-            };
-            urlParser(request).then(()=>{
-                 return apiServer(request).then(val=>{
-                    if(!val){
-                        return staticServer(request);
-                    }
-                    else{
-                        return val;
-                    }
-                }).then(val=>{
+            let context={
+                req:request,
+                reqCtx:{
+                    body:"",   //post请求的数据
+                    query:{}   // 处理客户端get请求
+                },
+                res:response,
+                resCtx:{
+                    headers:{},   //response的返回报文
+                    body:"",      // 返回给前端的内容区域
+                }
+            }
+            this.composeMiddleWare(context)
+                .then(()=> {
+                    let {headers,body}=context.resCtx;
                     let base={"X-powered-by":"Node.js"};
-                    let body="";
-                    if(val instanceof Buffer){
-                        body=val;
-                    }else{
-                        body=JSON.stringify(val);
-                        let finalHeader=Object.assign(base,{"Content-Type":"application/json"});
-                        response.writeHead(200,"ok",finalHeader);
-                    };
-                    response.end(body);
-                })
+                    context.res.writeHead(200,"ok",Object.assign(headers,base));
+                    context.res.end(body);
             })
-
-
         }
     }
 }
