@@ -7,11 +7,11 @@ module.exports=(ctx)=>{
     method=method.toLowerCase();
     return new Promise((resolve,reject)=>{
         if(method =="post"){
-            let data="";
+            let data=[];
             req.on("data",chunk=>{
-                data+=chunk;
+                data.push(chunk);
             }).on("end",()=>{
-                reqCtx.body=JSON.parse(data);
+                reqCtx.body=JSON.parse(Buffer.concat(data).toString());
                 resolve();
             })
         }else{

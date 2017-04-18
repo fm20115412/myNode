@@ -22,5 +22,8 @@
   "homepage": "https://github.com/fm20115412/myNode#readme",
   "devDependencies": {
     "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "ejs": "^2.5.6"
   }
 }
