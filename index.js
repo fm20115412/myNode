@@ -11,11 +11,10 @@ const staticServer = require("./app/staticServer");
 const apiServer = require("./app/api");
 const urlParser = require("./app/url-parser");
 const viewServer=require("./app/view-server");
-server.use(viewServer);
-
 server.use(urlParser);
 server.use(apiServer);
 server.use(staticServer);
+server.use(viewServer);
 
 
 http.createServer(server.initServer()).listen(PORT,()=>{

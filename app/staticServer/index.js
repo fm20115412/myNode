@@ -18,10 +18,9 @@ let staticFunc=(ctx)=>{
             fs.readFile(_path,(err,data)=>{
                 if(err){
                     resCtx.body=`Not Found${err.stack}`;
-                }else{
+                }
                     resCtx.body=data;
                     resolve();
-                }
             });
         }else{
             resolve();

@@ -5,33 +5,42 @@ const ejs=require("ejs");
 const fs=require("fs");
 const path=require("path");
 const mime=require("mime");
+const urlrewriteMap=require("./urlrewrite");
 
 module.exports=(ctx)=>{
     let {req, resCtx} =ctx;
     let { url } =req;
     return  Promise.resolve({
         then:(resolve,reject)=>{
-            let urlMap={
-                "/":{viewName:"index.html"},
-                "/about":{viewName:"about.html"}
-            };
-            let viewPath=path.resolve(process.cwd(),"public");
-            if(urlMap[url]){
-                let {viewName} =urlMap[url];
-                let htmlpath=path.resolve(viewPath,viewName);
-                resCtx.headers=Object.assign(resCtx.headers,
-                    {
-                        "Content-Type": mime.lookup(htmlpath)
-                    })
-                let render=ejs.compile(fs.readFileSync(htmlpath,"utf8"),{
-                    compileDebug:true
-                })
-                resCtx.body=render({name:"lily"});
-                resolve();
-            }else{
-                resolve();
-            }
+           if(url.match(".action")|| url.match(/\./)){
+               resolve()
+           }
+           else{
+               const viewPath=path.resolve(__dirname,"ejs");
+               let ejsName=urlrewriteMap[url];
+               if(ejsName){
+                   let layoutPath=path.resolve(viewPath,"layout.ejs")
+                   let layoutHtml=fs.readFileSync(layoutPath,"utf8");
+                   let render=ejs.compile(layoutHtml,{
+                       compileDebug:true,
+                       filename:layoutPath
+                   })
+                   resCtx.headers=Object.assign(resCtx.headers,{
+                       "Content-Type":"text/html"
+                   })
+                   resCtx.body=render({templateName:ejsName});
+                   resolve();
+               }
+               else{
+                   resCtx.headers=Object.assign(resCtx.headers,{
+                       "Location":"/"
+                   })
+                   resCtx.statusCode=302;
+                   resCtx.statusMessage="Found";
+                   resCtx.body="";
+                   resolve();
+               }
+           }
         }
     })
-
 }

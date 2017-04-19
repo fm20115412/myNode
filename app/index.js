@@ -30,15 +30,17 @@ class App{
                 },
                 res:response,
                 resCtx:{
+                    statusMessage:"ok",
+                    statusCode:"200",
                     headers:{},   //response的返回报文
                     body:"",      // 返回给前端的内容区域
                 }
             }
             this.composeMiddleWare(context)
                 .then(()=> {
-                    let {headers,body}=context.resCtx;
+                    let {headers,body,statusCode,statusMessage}=context.resCtx;
                     let base={"X-powered-by":"Node.js"};
-                    context.res.writeHead(200,"ok",Object.assign(headers,base));
+                    context.res.writeHead(statusCode,statusMessage,Object.assign(base,headers));
                     context.res.end(body);
             })
         }

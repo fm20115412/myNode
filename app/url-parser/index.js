@@ -5,17 +5,19 @@ module.exports=(ctx)=>{
     let {req,reqCtx}=ctx;
     let {method}=ctx.req;
     method=method.toLowerCase();
-    return new Promise((resolve,reject)=>{
-        if(method =="post"){
-            let data=[];
-            req.on("data",chunk=>{
-                data.push(chunk);
-            }).on("end",()=>{
-                reqCtx.body=JSON.parse(Buffer.concat(data).toString());
+    return Promise.resolve({
+        then:(resolve,reject)=>{
+            if(method =="post"){
+                let data=[];
+                req.on("data",chunk=>{
+                    data.push(chunk);
+                }).on("end",()=>{
+                    reqCtx.body=JSON.parse(Buffer.concat(data).toString());
+                    resolve();
+                })
+            }else{
                 resolve();
-            })
-        }else{
-            resolve();
+            }
         }
     })
 }
