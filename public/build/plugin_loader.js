@@ -1,6 +1,4 @@
-/**
- * Created by fm on 2017/4/18.
- */
+// webpack 插件配置
 const path = require('path'),
     webpack = require("webpack"),
     CopyWebpackPlugin = require('copy-webpack-plugin'),

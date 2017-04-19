@@ -1,5 +1,6 @@
-/**
- * Created by fm on 2017/4/18.
+/*
+ * @Author slashhuang
+ * webpack项目配置
  */
 var  plugins = require('./plugin_loader.js')['plugins'];
 var  loaders = require('./plugin_loader.js')['loaders'];
@@ -11,7 +12,6 @@ var  AddResolve = (obj)=>{
     }
     return transObj;
 };
-console.log(path.resolve(process.cwd(),"dist/"))
 //webpack配置文件
 module.exports =  {
     watch: true,

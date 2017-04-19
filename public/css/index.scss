@@ -1,0 +1,57 @@
+body{
+    background: peachpuff ;
+}
+.clearfix{
+    &:after{
+        display:block;
+        content: "";
+        clear: both;
+    }
+}
+header{
+    border-bottom: 1px solid #fff;
+    img{
+        float:left;
+        width:100px;
+        height:100px;
+    }
+    .nav{
+        float:left;
+        li{
+            display:inline-block;
+            padding: 20px;
+            a{
+                transition: ease 0.3s;
+                &:hover{
+                    color:yellow
+                }
+            }
+        }
+    }
+}
+.content{
+    min-height: 800px;
+}
+footer{
+    padding: 20px 30px;
+    border-bottom: 1px solid #fff;
+    img{
+        float:left;
+        width:100px;
+        height:100px;
+    }
+    .links{
+        float:left;
+        font-size: 20px;
+        li{
+            display: inline-block;
+            padding: 20px;
+            a{
+                transition: ease 0.3s;
+                &:hover{
+                    color:yellow
+                }
+            }
+        }
+    }
+}

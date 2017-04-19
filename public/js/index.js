@@ -1,6 +1,7 @@
 /**
  * Created by fm on 2017/3/25.
  */
+require("../css/index.scss")
 $.ajax({
     url:"/fruit.action",
     method:"get",
