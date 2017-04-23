@@ -28,7 +28,10 @@ module.exports=(ctx)=>{
                    resCtx.headers=Object.assign(resCtx.headers,{
                        "Content-Type":"text/html"
                    })
-                   resCtx.body=render({templateName:ejsName});
+                   resCtx.body=render({
+                       templateName:ejsName,
+                       hasUser:resCtx.hasUser
+                   });
                    resolve();
                }
                else{

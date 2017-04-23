@@ -30,6 +30,7 @@ class App{
                 },
                 res:response,
                 resCtx:{
+                    hasUser:false,
                     statusMessage:"ok",
                     statusCode:"200",
                     headers:{},   //response的返回报文
