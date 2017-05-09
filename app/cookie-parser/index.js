@@ -16,7 +16,6 @@ module.exports=(ctx)=>{
                 resCtx.hasUser=true;
                 res.setHeader("Set-Cookie",cookieStr(3600));
             }
-
             if(whiteNameList.indexOf(url)>-1){
                 res.setHeader("Set-Cookie",cookieStr(3600))
             }

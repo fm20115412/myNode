@@ -8,50 +8,93 @@ body{
         clear: both;
     }
 }
-header{
-    border-bottom: 1px solid #fff;
-    img{
-        float:left;
-        width:100px;
-        height:100px;
-    }
-    .nav{
-        float:left;
-        li{
-            display:inline-block;
-            padding: 20px;
-            a{
-                transition: ease 0.3s;
-                &:hover{
-                    color:yellow
-                }
-            }
-        }
-    }
-}
-.content{
-    min-height: 800px;
-}
-footer{
+$s-screen:480px;
+$m-screen:700px;
+$b-screen:800px;
+$blue:lightskyblue;
+$l-height:100px;
+$m-height:60px;
+$s-height:40px;
+header,footer {
+    position: relative;
     padding: 20px 30px;
-    border-bottom: 1px solid #fff;
-    img{
-        float:left;
-        width:100px;
-        height:100px;
+    background: $blue;
+    & header {
+        border-bottom: 1px solid #fff;
     }
-    .links{
-        float:left;
-        font-size: 20px;
-        li{
+    & footer {
+        border-top: 1px solid #fff;
+    }
+    & .avatar {
+        position: absolute;
+        border-radius: 100%;
+        @media screen and (min-width: $s-screen) {
+            & {
+                left: 30px;
+                top: 20px;
+                width: $l-height;
+                height: $l-height;
+            }
+        }
+        @media screen and (max-width: $s-screen) {
+            & {
+                left: 30px;
+                top: 30px;
+                width: $m-height;
+                height: $m-height;
+            }
+        }
+    }
+    @mixin navScreen($margin,$screen) {
+        font-size: 18px;
+        @if ($margin ==20px or $screen == $s-screen) {
+            line-height: $s-height;
+        } @else {
+            line-height: $l-height;
+        }
+        li {
             display: inline-block;
-            padding: 20px;
-            a{
-                transition: ease 0.3s;
-                &:hover{
-                    color:yellow
+            margin: 0 $margin;
+            & .links {
+                line-height: $m-height;
+            }
+        }
+    }
+    .nav {
+        margin-left: 130px;
+        text-align: right;
+        @media screen and (min-width: $b-screen) {
+            @include navScreen(20px, $b-screen)
+        }
+        @media screen and (min-width: $m-screen) and (max-width: $b-screen) {
+            @include navScreen(10px, $m-screen)
+        }
+        @media screen and (min-width: $s-screen) and (max-width: $m-screen) {
+            width: 410px;
+            text-align: center;
+            @include navScreen(10px, $s-screen)
+        }
+        @media screen and (max-width: $s-screen) {
+            font-size: 14px;
+            li {
+                margin: 0 10px;
+                display: block;
+                text-align: left;
+                &.links {
+                    line-height: $l-height;
+                }
+            }
+        }
+        li {
+            a {
+                transition: ease .2s;
+                &:hover {
+                    color: yellow
                 }
             }
         }
     }
+}
+.content {
+    min-height: 800px;
 }
