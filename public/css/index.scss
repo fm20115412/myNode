@@ -13,11 +13,11 @@ $m-screen:700px;
 $b-screen:800px;
 $blue:lightskyblue;
 $l-height:100px;
-$m-height:60px;
-$s-height:40px;
+$m-height:80px;
+$s-height:60px;
 header,footer {
     position: relative;
-    padding: 20px 30px;
+    padding: 8px 10px;
     background: $blue;
     & header {
         border-bottom: 1px solid #fff;
@@ -27,27 +27,43 @@ header,footer {
     }
     & .avatar {
         position: absolute;
-        border-radius: 100%;
-        @media screen and (min-width: $s-screen) {
+        @media screen and (min-width: $m-screen) {
             & {
-                left: 30px;
-                top: 20px;
-                width: $l-height;
-                height: $l-height;
+                left: 20px;
+                top: 10px;
+                img{
+                    border-radius: 100%;
+                    width: $l-height;
+                    height: $l-height;
+                }
+            }
+        }
+        @media screen and (min-width: $s-screen) and (max-width: $m-screen){
+            & {
+                left: 20px;
+                top: 10px;
+                img{
+                    border-radius: 100%;
+                    width: $m-height;
+                    height: $m-height;
+                }
             }
         }
         @media screen and (max-width: $s-screen) {
             & {
-                left: 30px;
-                top: 30px;
-                width: $m-height;
-                height: $m-height;
+                left: 20px;
+                top: 15px;
+                img{
+                    border-radius: 100%;
+                    width: $s-height;
+                    height: $s-height;
+                }
             }
         }
     }
     @mixin navScreen($margin,$screen) {
         font-size: 18px;
-        @if ($margin ==20px or $screen == $s-screen) {
+        @if ($screen == $s-screen) {
             line-height: $s-height;
         } @else {
             line-height: $l-height;
@@ -55,7 +71,7 @@ header,footer {
         li {
             display: inline-block;
             margin: 0 $margin;
-            & .links {
+            &.links {
                 line-height: $m-height;
             }
         }
@@ -70,18 +86,16 @@ header,footer {
             @include navScreen(10px, $m-screen)
         }
         @media screen and (min-width: $s-screen) and (max-width: $m-screen) {
-            width: 410px;
-            text-align: center;
             @include navScreen(10px, $s-screen)
         }
         @media screen and (max-width: $s-screen) {
             font-size: 14px;
             li {
-                margin: 0 10px;
+                margin: 0 30px;
                 display: block;
-                text-align: left;
+                text-align: right;
                 &.links {
-                    line-height: $l-height;
+                    line-height: ($s-height - 30);
                 }
             }
         }
