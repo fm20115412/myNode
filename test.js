@@ -1,6 +1,7 @@
 /**
  * Created by fm on 2017/3/28.
  */
+// sh ./db.sh
 /*
 var p1=new Promise(function (resolve,reject) {
     setTimeout(()=>reject(new Error("fail")),3000)
