@@ -13,13 +13,13 @@ const urlParser = require("./app/url-parser");
 const viewServer=require("./app/view-server");
 const cookieServer=require("./app/cookie-parser");
 
-server.use(cookieServer);
 server.use(urlParser);
+server.use(cookieServer);
 server.use(apiServer);
 server.use(staticServer);
 server.use(viewServer);
 
-
+debugger
 http.createServer(server.initServer()).listen(PORT,()=>{
-    console.log(`server listening on port ${PORT}`)
+    console.log("server listening on port 7000")
 });
