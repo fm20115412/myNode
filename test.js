@@ -36,3 +36,5 @@ var b=JSON.stringify(a);
 console.log(b);
 var c=JSON.parse(b);
 console.log(c);
+
+db.users.insert({"a":1,"b":2})
