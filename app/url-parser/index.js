@@ -6,7 +6,7 @@ module.exports=(ctx)=>{
     let {req,reqCtx}=ctx;
     let {method,url}=ctx.req;
     method=method.toLowerCase();
-    Object.assign(reqCtx,URL.parse(url,true),method)
+    Object.assign(reqCtx,URL.parse(url,true),{method})
     debugger
     return Promise.resolve({
         then:(resolve,reject)=>{

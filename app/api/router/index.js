@@ -20,10 +20,14 @@ class Router{
         let {pathname,method}=ctx.reqCtx;
         if(method=="get" || method=="post"){
             let handler=this.routerMap[method][pathname]
-            return Promise.resolve(handler(ctx))
+            if(handler){
+                return Promise.resolve(handler(ctx))
+            }else{
+                return Promise.resolve()
+            }
         }else{
             return Promise.resolve()
         }
     }
 }
-module.exports=Router
+module.exports=new Router()

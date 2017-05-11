@@ -21,5 +21,5 @@ server.use(viewServer);
 
 debugger
 http.createServer(server.initServer()).listen(PORT,()=>{
-    console.log("server listening on port 7000")
+    console.log('server listening on port 7000')
 });
