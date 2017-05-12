@@ -4,7 +4,10 @@
 let Router=require("./router")
 let {$_saveBlog, $_saveCategory}=require("./mongo")
 Router.get("/categoryList.action",ctx=>{return {a:1}})
-Router.get("/category.action",ctx=>{})
+Router.get("/category.action",ctx=>{
+    let category=ctx.reqCtx.query
+    return $_saveCategory(category)
+})
 Router.post("/blog.action",ctx=>{
     let blog=ctx.reqCtx.body
     return $_saveBlog(blog)

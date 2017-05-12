@@ -26,13 +26,14 @@ module.exports=(ctx)=>{
                        compileDebug:true,
                        filename:layoutPath
                    })
+                   let html=render({
+                       viewName:ejsName,
+                       hasUser:resCtx.hasUser
+                   })
                    resCtx.headers=Object.assign(resCtx.headers,{
                        "Content-Type":"text/html"
                    })
-                   resCtx.body=render({
-                       templateName:ejsName,
-                       hasUser:resCtx.hasUser
-                   });
+                   resCtx.body=html;
                    resolve();
                }
                else{

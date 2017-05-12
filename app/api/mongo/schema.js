@@ -15,6 +15,5 @@ exports.blogSchema=new Schema({
     }
 })
 exports.categorySchema=new Schema({
-    category:String,
-    _id:String
+    category:String
 })

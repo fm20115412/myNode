@@ -7,19 +7,17 @@ const BlogModal=mongoose.model("blog",blogSchema)
 const CategoryModal=mongoose.model("Category",categorySchema)
 
 const $_saveBlog=blog=>{
-    return new BlogModal.findOneAndUpdate({title:blog.title},blog,{
+    return BlogModal.findOneAndUpdate({title:blog.title},blog,{
         upsert:true
     }).exec().then(_blog=>{
         return {
             status:1,
-            data:blog
+            data:_blog
         }
     })
 }
 const $_saveCategory=category=>{
-    return new CategoryModal.findOneAndUpdate({name:category.name},category,{
-        upsert:true
-    }).exec().then(_category=>{
+    return CategoryModal.findOneAndUpdate({name:category.name},category).then(_category=>{
         return {
             status:1,
             data:_category
