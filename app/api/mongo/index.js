@@ -3,11 +3,11 @@
  */
 const mongoose=require("mongoose")
 const {blogSchema,categorySchema}=require("./schema");
-const BlogModal=mongoose.model("blog",blogSchema)
-const CategoryModal=mongoose.model("Category",categorySchema)
+const BlogModel=mongoose.model("Blog",blogSchema)
+const CategoryModel=mongoose.model("Category",categorySchema)
 
 const $_saveBlog=blog=>{
-    return BlogModal.findOneAndUpdate({title:blog.title},blog,{
+    return BlogModel.findOneAndUpdate({title:blog.title},blog,{
         upsert:true
     }).exec().then(_blog=>{
         return {
@@ -17,9 +17,10 @@ const $_saveBlog=blog=>{
     })
 }
 const $_saveCategory=category=>{
-    return CategoryModal.findOneAndUpdate({name:category.name},category).then(_category=>{
+    return CategoryModel.findOneAndUpdate({name:category.name},category).then(_category=>{
         return {
             status:1,
+            nmae:"babybear",
             data:_category
         }
     })

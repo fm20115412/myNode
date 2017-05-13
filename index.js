@@ -21,13 +21,9 @@ server.use(viewServer);
 
 const mongoose = require('mongoose');
 mongoose.Promise=global.Promise;
-mongoose.connect('mongodb://localhost/blogDB');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    console.log('we are connected')
-});
-
+mongoose.connect('mongodb://localhost/blogDB')
+mongoose.connection.on('error', ()=>{console.log(`error happend for db`)})
+                   .once('open', ()=>{console.log(`we're connected!`)})
 http.createServer(server.initServer()).listen(PORT,()=>{
     console.log('server listening on port 7000')
 });
