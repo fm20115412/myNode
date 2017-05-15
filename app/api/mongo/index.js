@@ -61,10 +61,22 @@ const $_getBlogList=query=>{
             }
         })
 }
+const $_deleteBlog=query=>{
+    let condition={
+        _id:mongoose.Types.ObjectId(query.id)
+    }
+    return BlogModel.remove(condition).exec().then(blog=>{
+        return {
+            status:1,
+            data:"删除成功"
+        }
+    })
+}
 module.exports={
     $_saveBlog,
     $_saveCategory,
     $_getCategoryList,
     $_getBlogDetail,
-    $_getBlogList
+    $_getBlogList,
+    $_deleteBlog
 }

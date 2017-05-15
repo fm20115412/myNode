@@ -6,7 +6,8 @@ let {$_saveBlog,
     $_saveCategory,
     $_getCategoryList,
     $_getBlogDetail,
-    $_getBlogList}=require("./mongo")
+    $_getBlogList,
+    $_deleteBlog}=require("./mongo")
 Router.get("/categoryList.action",ctx=>{
     return $_getCategoryList()
 })
@@ -25,5 +26,9 @@ Router.get("/blogDetail.action",ctx=>{
 Router.get("/blogList.action",ctx=>{
     let {query}=ctx.reqCtx
     return $_getBlogList(query)
+})
+Router.post("./deleteBlog.action",ctx=>{
+    let {body}=ctx.reqCtx
+    return $_deleteBlog(blog)
 })
 module.exports=Router
