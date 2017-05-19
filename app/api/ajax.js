@@ -15,6 +15,7 @@ Router.post("/category.action",ctx=>{
     let category=ctx.reqCtx.body
     return $_saveCategory(category)
 })
+// 添加博客
 Router.post("/blog.action",ctx=>{
     let blog=ctx.reqCtx.body
     return $_saveBlog(blog)

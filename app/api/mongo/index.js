@@ -53,7 +53,7 @@ const $_getBlogDetail=query=>{
     })
 }
 const $_getBlogList=query=>{
-    return CategoryModel.find(query).exec().then(
+    return BlogModel.find(query).exec().then(
         blogList=>{
             return {
                 status:1,
