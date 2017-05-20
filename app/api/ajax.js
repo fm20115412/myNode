@@ -28,8 +28,8 @@ Router.get("/blogList.action",ctx=>{
     let {query}=ctx.reqCtx
     return $_getBlogList(query)
 })
-Router.post("./deleteBlog.action",ctx=>{
-    let {body}=ctx.reqCtx
-    return $_deleteBlog(blog)
+Router.post("/deleteBlog.action",ctx=>{
+    let { body }=ctx.reqCtx
+    return $_deleteBlog(body)
 })
 module.exports=Router
